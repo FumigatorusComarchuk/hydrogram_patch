@@ -1,4 +1,4 @@
-from pyrogram_patch.patch_helper import PatchHelper
+from HydroPatch.patch_helper import PatchHelper
 
 from . import middleware_types
 

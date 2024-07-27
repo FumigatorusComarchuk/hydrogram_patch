@@ -1,15 +1,15 @@
 from dataclasses import dataclass
 from typing import Union
-from pyrogram_patch.fsm import BaseStorage
+from HydroPatch.fsm import BaseStorage
 from contextlib import suppress
 
 
 @dataclass()
 class PatchDataPool:
     update_pool: dict
-    pyrogram_patch_middlewares: list
-    pyrogram_patch_outer_middlewares: list
-    pyrogram_patch_fsm_storage: Union[BaseStorage, None]
+    hydrogram_patch_middlewares: list
+    hydrogram_patch_outer_middlewares: list
+    hydrogram_patch_fsm_storage: Union[BaseStorage, None]
 
     @staticmethod
     def include_helper_to_pool(update, patch_helper) -> None:
@@ -26,7 +26,7 @@ class PatchDataPool:
 
 
 PatchDataPool.update_pool = {}
-PatchDataPool.pyrogram_patch_middlewares = []
-PatchDataPool.pyrogram_patch_outer_middlewares = []
-PatchDataPool.pyrogram_patch_fsm_storage = None
+PatchDataPool.hydrogram_patch_middlewares = []
+PatchDataPool.hydrogram_patch_outer_middlewares = []
+PatchDataPool.hydrogram_patch_fsm_storage = None
 

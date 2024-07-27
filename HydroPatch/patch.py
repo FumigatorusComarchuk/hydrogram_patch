@@ -1,6 +1,6 @@
-from pyrogram import Client
+from hydrogram import Client
 
-from pyrogram_patch.fsm import BaseStorage
+from HydroPatch.fsm import BaseStorage
 from .patch_data_pool import PatchDataPool
 
 from .dispatcher import PatchedDispatcher
@@ -13,20 +13,20 @@ class PatchManager:
         self.dispatcher = client.dispatcher
 
     def include_middleware(self, middleware: "PatchMiddleware") -> None:
-        PatchDataPool.pyrogram_patch_middlewares.append(middleware)
+        PatchDataPool.hydrogram_patch_middlewares.append(middleware)
 
     def include_outer_middleware(self, middleware: "PatchMiddleware") -> None:
-        PatchDataPool.pyrogram_patch_outer_middlewares.append(middleware)
+        PatchDataPool.hydrogram_patch_outer_middlewares.append(middleware)
 
     def set_storage(self, storage: BaseStorage) -> None:
-        PatchDataPool.pyrogram_patch_fsm_storage = storage
+        PatchDataPool.hydrogram_patch_fsm_storage = storage
 
     def include_router(self, router: Router) -> None:
         router.set_client(self.client)
 
 
 def patch(app: Client) -> PatchManager:
-    """app - instance of your pyrogram client
+    """app - instance of your hydrogram client
     returns
     MiddlewarePatchManager instance with methods:
     include_middleware and include_outer_middleware

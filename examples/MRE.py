@@ -1,15 +1,15 @@
-from pyrogram import Client, filters
-from pyrogram.handlers import EditedMessageHandler, MessageHandler
-from pyrogram.types import Message
+from hydrogram import Client, filters
+from hydrogram.handlers import EditedMessageHandler, MessageHandler
+from hydrogram.types import Message
 
-from pyrogram_patch import patch
-from pyrogram_patch.fsm import State, StateItem, StatesGroup
-from pyrogram_patch.fsm.filter import StateFilter
-from pyrogram_patch.fsm.storages import MemoryStorage
-from pyrogram_patch.middlewares import PatchHelper
-from pyrogram_patch.middlewares.middleware_types import (MixedMiddleware,
+from HydroPatch import patch
+from HydroPatch.fsm import State, StateItem, StatesGroup
+from HydroPatch.fsm.filter import StateFilter
+from HydroPatch.fsm.storages import MemoryStorage
+from HydroPatch.middlewares import PatchHelper
+from HydroPatch.middlewares.middleware_types import (MixedMiddleware,
                                                          OnMessageMiddleware)
-from pyrogram_patch.router import Router
+from HydroPatch.router import Router
 
 SESSION_NAME = "bot"
 API_ID = 8

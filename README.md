@@ -1,18 +1,18 @@
-# pyrogram_patch
+# HydroPatch
 
-pyrogram_patch is a Python library this is a library that adds middlewares and fsm to pyrogram.
+HydroPatch is a Python library this is a library that adds middlewares and fsm to pyrogram.
 
 ## Installation
 
-pip install git+https://github.com/kotttee/pyrogram_patch.git
+pip install git+https://github.com/DaviisDev/HydroPatch.git
 
 # Middlewares
 
 ## Usage
 
 ```python
-from pyrogram import Client
-from pyrogram_patch import patch
+from hydrogrm import Client
+from HydroPatch import patch
 
 # create client
 app = Client("my_account", api_id='API_ID', api_hash='API_HASH')
@@ -28,8 +28,8 @@ patch_manager.include_middleware(MyMiddleware(*args, **kwargs))
 ## Create middleware
 
 ```python
-from pyrogram_patch.middlewares.middleware_types import OnUpdateMiddleware
-from pyrogram_patch.middlewares import PatchHelper
+from HydroPatch.middlewares.middleware_types import OnUpdateMiddleware
+from HydroPatch.middlewares import PatchHelper
 
 
 class MyMiddleware(OnUpdateMiddleware):
@@ -64,18 +64,18 @@ outer middleware - middleware that handles everything even if it wasn't caught b
 ```
 events and middlewares
 ```text
-on_message - OnMessageMiddleware
-on_inline_query - OnInlineQueryMiddleware
-on_user_status - OnUserStatusMiddleware
-on_disconnect - OnDisconnectMiddleware
-on_edited_message - OnEditedMessageMiddleware
-on_deleted_messages - OnDeletedMessagesMiddleware
-on_chosen_inline_result - OnChosenInlineResultMiddleware
-on_chat_member_updated - OnChatMemberUpdatedMiddleware
-on_raw_update - OnRawUpdateMiddleware
-on_chat_join_request - OnChatJoinRequestMiddleware
-on_callback_query - OnCallbackQueryMiddleware
-on_poll - OnPoolMiddleware
+message - OnMessageMiddleware
+inline_query - OnInlineQueryMiddleware
+user_status - OnUserStatusMiddleware
+disconnect - OnDisconnectMiddleware
+edited_message - OnEditedMessageMiddleware
+deleted_messages - OnDeletedMessagesMiddleware
+chosen_inline_result - OnChosenInlineResultMiddleware
+chat_member_updated - OnChatMemberUpdatedMiddleware
+raw_update - OnRawUpdateMiddleware
+chat_join_request - OnChatJoinRequestMiddleware
+callback_query - OnCallbackQueryMiddleware
+poll - OnPoolMiddleware
 
 OnUpdateMiddleware - middleware that reacts to everything
 
@@ -93,18 +93,18 @@ patch_manager.include_middleware(ExampleMiddleware((MessageHandler, EditedMessag
 ```
 everything you can import from
 ```text
-from pyrogram_patch.middlewares.middleware_types
+from HydroPatch.middlewares.middleware_types
 ```
 
 # FSM
-allowed update types you can manage with 
+allowed update types you can manage with
 app.dispatcher.manage_allowed_update_types(pyrogram.types.Update)
 ## Usage
 
 ```python
 from pyrogram import Client
-from pyrogram_patch import patch
-from pyrogram_patch.fsm.storages import MemoryStorage
+from HydroPatch import patch
+from HydroPatch.fsm.storages import MemoryStorage
 
 # create client
 app = Client("my_account", api_id='API_ID', api_hash='API_HASH')
@@ -120,7 +120,7 @@ patch_manager.set_storage(MemoryStorage())
 ## Creating state groups
 
 ```python
-from pyrogram_patch.fsm import StatesGroup, StateItem
+from HydroPatch.fsm import StatesGroup, StateItem
 
 class Parameters(StatesGroup):
     weight = StateItem()
@@ -129,8 +129,8 @@ class Parameters(StatesGroup):
 ## Processing and filtering data
 
 ```python
-from pyrogram_patch.fsm import State
-from pyrogram_patch.fsm.filter import StateFilter
+from HydroPatch.fsm import State
+from HydroPatch.fsm.filter import StateFilter
 
 
 @app.on_message(filters.private & StateFilter()) # the same as StateFilter("*"), catches all states
@@ -139,14 +139,14 @@ async def process_1(client: Client, message, state: State):
         await client.send_message(message.chat.id, 'enter your weight')
         await state.set_state(Parameters.weight)
 
-        
+
 @app.on_message(filters.private & StateFilter(Parameters.weight))
 async def process_2(client: Client, message, state: State):
     await state.set_data({'weight': message.text})
     await client.send_message(message.chat.id, 'enter your height')
     await state.set_state(Parameters.height)
 
-    
+
 @app.on_message(filters.private & StateFilter(Parameters.height))
 async def process_3(client: Client, message, state: State):
     state_data = await state.get_data()
@@ -156,7 +156,7 @@ async def process_3(client: Client, message, state: State):
 ```
 ## Writing your own storages
 ```python
-from pyrogram_patch.fsm import State, BaseStorage
+from HydroPatch.fsm import State, BaseStorage
 
 
 class YourStorage(BaseStorage):
@@ -183,7 +183,7 @@ class YourStorage(BaseStorage):
 # don't forget to make a pull request to the patch's GitHub 😉
 ```
 
-## Using filters with outer_middlewares 
+## Using filters with outer_middlewares
 only works with a few types of updates
 ```python
 async def my_filter(_, __, update) -> bool:
@@ -198,12 +198,12 @@ my_filter = filters.create(my_filter)
 ## Routers
 
 ```python
-from pyrogram_patch.router import Router
+from HydroPatch.router import Router
 
 
 my_router = Router()
 
-@my_router.on_message(filters.me)
+@my_router.message(filters.me)
 async def my_commands(client, message, my_value_name, some_data):
     print(my_value_name)
 ```
@@ -221,9 +221,9 @@ Be sure to update tests as needed.
 
 
 
-github: https://github.com/kotttee/pyrogram_patch
+github: https://github.com/DaviisDev/HydroPatch
 
-telegram: https://t.me/kotttee
+telegram: https://t.me/DaviisDev
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

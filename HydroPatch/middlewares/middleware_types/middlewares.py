@@ -1,17 +1,17 @@
-from pyrogram.handlers.callback_query_handler import CallbackQueryHandler
-from pyrogram.handlers.chat_join_request_handler import ChatJoinRequestHandler
-from pyrogram.handlers.chat_member_updated_handler import \
+from hydrogram.handlers.callback_query_handler import CallbackQueryHandler
+from hydrogram.handlers.chat_join_request_handler import ChatJoinRequestHandler
+from hydrogram.handlers.chat_member_updated_handler import \
     ChatMemberUpdatedHandler
-from pyrogram.handlers.chosen_inline_result_handler import \
+from hydrogram.handlers.chosen_inline_result_handler import \
     ChosenInlineResultHandler
-from pyrogram.handlers.deleted_messages_handler import DeletedMessagesHandler
-from pyrogram.handlers.disconnect_handler import DisconnectHandler
-from pyrogram.handlers.edited_message_handler import EditedMessageHandler
-from pyrogram.handlers.inline_query_handler import InlineQueryHandler
-from pyrogram.handlers.message_handler import MessageHandler
-from pyrogram.handlers.poll_handler import PollHandler
-from pyrogram.handlers.raw_update_handler import RawUpdateHandler
-from pyrogram.handlers.user_status_handler import UserStatusHandler
+from hydrogram.handlers.deleted_messages_handler import DeletedMessagesHandler
+from hydrogram.handlers.disconnect_handler import DisconnectHandler
+from hydrogram.handlers.edited_message_handler import EditedMessageHandler
+from hydrogram.handlers.inline_query_handler import InlineQueryHandler
+from hydrogram.handlers.message_handler import MessageHandler
+from hydrogram.handlers.poll_handler import PollHandler
+from hydrogram.handlers.raw_update_handler import RawUpdateHandler
+from hydrogram.handlers.user_status_handler import UserStatusHandler
 
 
 class OnUpdateMiddleware:
@@ -106,7 +106,7 @@ class OnPoolMiddleware:
 
 
 class MixedMiddleware:
-    """pass the types of handlers from pyrogram.handlers during initialization that the malware will process
+    """pass the types of handlers from hydrogram.handlers during initialization that the malware will process
 
     patch_manager.include_middleware(CheckIgnoreMiddleware((MessageHandler, EditedMessageHandler), False))
 

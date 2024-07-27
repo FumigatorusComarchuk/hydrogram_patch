@@ -2,16 +2,16 @@ import inspect
 from contextlib import suppress
 from typing import Union
 
-import pyrogram
-from pyrogram.dispatcher import Dispatcher, log
-from pyrogram.handlers import RawUpdateHandler
+import hydrogram
+from hydrogram.dispatcher import Dispatcher, log
+from hydrogram.handlers import RawUpdateHandler
 from .patch_data_pool import PatchDataPool
-from pyrogram_patch.fsm import BaseStorage
-from pyrogram_patch.middlewares import PatchHelper
+from HydroPatch.fsm import BaseStorage
+from HydroPatch.middlewares import PatchHelper
 
 
 class PatchedDispatcher(Dispatcher):
-    def __init__(self, client: pyrogram.Client):
+    def __init__(self, client: hydrogram.Client):
         super().__init__(client)
         self.patch_data_pool = PatchDataPool
 
@@ -38,13 +38,13 @@ class PatchedDispatcher(Dispatcher):
                 patch_helper = PatchHelper()
                 PatchDataPool.include_helper_to_pool(parsed_updates, patch_helper)
 
-                if PatchDataPool.pyrogram_patch_fsm_storage:
+                if PatchDataPool.hydrogram_patch_fsm_storage:
                     await patch_helper._include_state(
-                        parsed_updates, PatchDataPool.pyrogram_patch_fsm_storage, self.client
+                        parsed_updates, PatchDataPool.hydrogram_patch_fsm_storage, self.client
                     )
 
                 # process outer middlewares
-                for middleware in PatchDataPool.pyrogram_patch_outer_middlewares:
+                for middleware in PatchDataPool.hydrogram_patch_outer_middlewares:
                     if middleware == handler_type:
                         await patch_helper._process_middleware(
                             parsed_updates, middleware, self.client
@@ -60,7 +60,7 @@ class PatchedDispatcher(Dispatcher):
                                     # filtering event
                                     if await handler.check(self.client, parsed_updates):
                                         # process middlewares
-                                        for middleware in PatchDataPool.pyrogram_patch_middlewares:
+                                        for middleware in PatchDataPool.hydrogram_patch_middlewares:
                                             if middleware == type(handler):
                                                 await patch_helper._process_middleware(
                                                     parsed_updates,
@@ -76,7 +76,7 @@ class PatchedDispatcher(Dispatcher):
                             elif isinstance(handler, RawUpdateHandler):
                                 try:
                                     # process middlewares
-                                    for middleware in PatchDataPool.pyrogram_patch_middlewares:
+                                    for middleware in PatchDataPool.hydrogram_patch_middlewares:
                                         if middleware == type(handler):
                                             await patch_helper._process_middleware(
                                                     parsed_updates,
@@ -84,7 +84,7 @@ class PatchedDispatcher(Dispatcher):
                                                     self.client,
                                                 )
                                     args = (update, users, chats)
-                                except pyrogram.StopPropagation:
+                                except hydrogram.StopPropagation:
                                     PatchDataPool.exclude_helper_from_pool(parsed_updates)
                                     continue
                             if args is None:
@@ -108,9 +108,9 @@ class PatchedDispatcher(Dispatcher):
                                         self.client,
                                         *args
                                     )
-                            except pyrogram.StopPropagation:
+                            except hydrogram.StopPropagation:
                                 raise
-                            except pyrogram.ContinuePropagation:
+                            except hydrogram.ContinuePropagation:
                                 continue
                             except Exception as e:
                                 log.exception(e)
@@ -118,7 +118,7 @@ class PatchedDispatcher(Dispatcher):
                                 PatchDataPool.exclude_helper_from_pool(parsed_updates)
                             break
                     PatchDataPool.exclude_helper_from_pool(parsed_updates)
-            except pyrogram.StopPropagation:
+            except hydrogram.StopPropagation:
                 pass
             except Exception as e:
                 log.exception(e)

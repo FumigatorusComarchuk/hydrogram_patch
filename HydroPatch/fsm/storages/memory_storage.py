@@ -1,5 +1,5 @@
-from pyrogram_patch.fsm.base_storage import BaseStorage
-from pyrogram_patch.fsm.states import State
+from HydroPatch.fsm.base_storage import BaseStorage
+from HydroPatch.fsm.states import State
 
 
 class MemoryStorage(BaseStorage):

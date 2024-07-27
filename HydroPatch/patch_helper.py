@@ -1,8 +1,8 @@
 import inspect
 from typing import Any, Union
 from .patch_data_pool import PatchDataPool
-from pyrogram import Client, StopPropagation
-from pyrogram.handlers.handler import Handler
+from hydrogram import Client, StopPropagation
+from hydrogram.handlers.handler import Handler
 
 
 # you can modify it

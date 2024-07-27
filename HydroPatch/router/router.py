@@ -1,4 +1,4 @@
-from pyrogram import Client
+from hydrogram import Client
 
 from .patched_decorators import PatchedDecorators
 
