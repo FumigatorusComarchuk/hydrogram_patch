@@ -20,19 +20,19 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnInlineQuery:
-    def inline_query(self=None, filters=None, group: int = 0) -> Callable:
-        """Decorator for handling inline queries.
+class OnEditedMessage:
+    def edited_message(self=None, filters=None, group: int = 0) -> Callable:
+        """Decorator for handling edited messages.
 
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.InlineQueryHandler`.
+        :obj:`~hydrogram.handlers.EditedMessageHandler`.
 
         Parameters:
             filters (:obj:`~hydrogram.filters`, *optional*):
-                Pass one or more filters to allow only a subset of inline queries to be passed
+                Pass one or more filters to allow only a subset of messages to be passed
                 in your function.
 
             group (``int``, *optional*):
@@ -42,12 +42,13 @@ class OnInlineQuery:
         def decorator(func: Callable) -> Callable:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
-
                     self._app.add_handler(
-                        hydrogram.handlers.InlineQueryHandler(func, filters), group
+                        hydrogram.handlers.EditedMessageHandler(
+                            func, filters), group
                     )
                 else:
-                    self._decorators_storage.append((hydrogram.handlers.InlineQueryHandler(func, filters), group))
+                    self._decorators_storage.append(
+                        (hydrogram.handlers.EditedMessageHandler(func, filters), group))
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

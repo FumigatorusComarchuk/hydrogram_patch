@@ -1,8 +1,6 @@
-import inspect
-from typing import Any, Union
+from typing import Union
 from .patch_data_pool import PatchDataPool
 from hydrogram import Client, StopPropagation
-from hydrogram.handlers.handler import Handler
 
 
 # you can modify it
@@ -28,7 +26,8 @@ class PatchHelper:
 
     async def skip_handler(self) -> None:
         """use this method to skip the handler"""
-        raise StopPropagation("please ignore this error, it is raised by the PatchHelper.skip_handler method in one of your middlewares")
+        raise StopPropagation(
+            "please ignore this error, it is raised by the PatchHelper.skip_handler method in one of your middlewares")
 
     async def _get_data_for_handler(self, arguments) -> dict:
         """PLEASE DON'T USE THIS"""

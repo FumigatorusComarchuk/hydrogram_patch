@@ -20,20 +20,19 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnEditedMessage:
-    def edited_message(self=None, filters=None, group: int = 0) -> Callable:
-        """Decorator for handling edited messages.
+class OnChatJoinRequest:
+    def chat_join_request(self=None, filters=None, group: int = 0) -> Callable:
+        """Decorator for handling chat join requests.
 
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.EditedMessageHandler`.
+        :obj:`~hydrogram.handlers.ChatJoinRequestHandler`.
 
         Parameters:
             filters (:obj:`~hydrogram.filters`, *optional*):
-                Pass one or more filters to allow only a subset of messages to be passed
-                in your function.
+                Pass one or more filters to allow only a subset of updates to be passed in your function.
 
             group (``int``, *optional*):
                 The group identifier, defaults to 0.
@@ -43,10 +42,12 @@ class OnEditedMessage:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
                     self._app.add_handler(
-                        hydrogram.handlers.EditedMessageHandler(func, filters), group
+                        hydrogram.handlers.ChatJoinRequestHandler(
+                            func, filters), group
                     )
                 else:
-                    self._decorators_storage.append((hydrogram.handlers.EditedMessageHandler(func, filters), group))
+                    self._decorators_storage.append(
+                        (hydrogram.handlers.ChatJoinRequestHandler(func, filters), group))
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

@@ -1,4 +1,4 @@
-from HydroPatch.patch_helper import PatchHelper
+from hydrogram_patch.patch_helper import PatchHelper
 
 from . import middleware_types
 

@@ -20,33 +20,25 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnPoll:
-    def poll(self=None, filters=None, group: int = 0) -> Callable:
-        """Decorator for handling poll updates.
+class OnDisconnect:
+    def disconnect(self=None) -> Callable:
+        """Decorator for handling disconnections.
 
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.PollHandler`.
-
-        Parameters:
-            filters (:obj:`~hydrogram.filters`, *optional*):
-                Pass one or more filters to allow only a subset of polls to be passed
-                in your function.
-
-            group (``int``, *optional*):
-                The group identifier, defaults to 0.
+        :obj:`~hydrogram.handlers.DisconnectHandler`.
         """
 
         def decorator(func: Callable) -> Callable:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
                     self._app.add_handler(
-                        hydrogram.handlers.PollHandler(func, filters), group
-                    )
+                        hydrogram.handlers.DisconnectHandler(func))
                 else:
-                    self._decorators_storage.append((hydrogram.handlers.PollHandler(func, filters), group))
+                    self._decorators_storage.append(
+                        hydrogram.handlers.DisconnectHandler(func))
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

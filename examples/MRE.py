@@ -1,15 +1,15 @@
 from hydrogram import Client, filters
-from hydrogram.handlers import EditedMessageHandler, MessageHandler
+from hydrogram.handlers import MessageHandler
 from hydrogram.types import Message
 
-from HydroPatch import patch
-from HydroPatch.fsm import State, StateItem, StatesGroup
-from HydroPatch.fsm.filter import StateFilter
-from HydroPatch.fsm.storages import MemoryStorage
-from HydroPatch.middlewares import PatchHelper
-from HydroPatch.middlewares.middleware_types import (MixedMiddleware,
-                                                         OnMessageMiddleware)
-from HydroPatch.router import Router
+from hydrogram_patch import patch
+from hydrogram_patch.fsm import State, StateItem, StatesGroup
+from hydrogram_patch.fsm.filter import StateFilter
+from hydrogram_patch.fsm.storages import MemoryStorage
+from hydrogram_patch.middlewares import PatchHelper
+from hydrogram_patch.middlewares.middleware_types import (MixedMiddleware,
+                                                          OnMessageMiddleware)
+from hydrogram_patch.router import Router
 
 SESSION_NAME = "bot"
 API_ID = 8

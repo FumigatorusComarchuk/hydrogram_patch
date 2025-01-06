@@ -20,15 +20,15 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnDeletedMessages:
-    def deleted_messages(self=None, filters=None, group: int = 0) -> Callable:
-        """Decorator for handling deleted messages.
+class OnMessage:
+    def message(self=None, filters=None, group: int = 0) -> Callable:
+        """Decorator for handling new messages.
 
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.DeletedMessagesHandler`.
+        :obj:`~hydrogram.handlers.MessageHandler`.
 
         Parameters:
             filters (:obj:`~hydrogram.filters`, *optional*):
@@ -43,10 +43,11 @@ class OnDeletedMessages:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
                     self._app.add_handler(
-                        hydrogram.handlers.DeletedMessagesHandler(func, filters), group
+                        hydrogram.handlers.MessageHandler(func, filters), group
                     )
                 else:
-                    self._decorators_storage.append((hydrogram.handlers.DeletedMessagesHandler(func, filters), group))
+                    self._decorators_storage.append(
+                        (hydrogram.handlers.MessageHandler(func, filters), group))
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

@@ -1,18 +1,18 @@
-# HydroPatch
+# hydrogram_patch
 
-HydroPatch is a Python library this is a library that adds middlewares and fsm to pyrogram.
+hydrogram_patch is a Python library this is a library that adds middlewares and fsm to hydrogram.
 
 ## Installation
 
-pip install git+https://github.com/DaviisDev/HydroPatch.git
+pip install git+https://github.com/FumigatorusComarchuk/hydrogram_patch
 
 # Middlewares
 
 ## Usage
 
 ```python
-from hydrogrm import Client
-from HydroPatch import patch
+from hydrogram import Client
+from hydrogram_patch import patch
 
 # create client
 app = Client("my_account", api_id='API_ID', api_hash='API_HASH')
@@ -28,8 +28,8 @@ patch_manager.include_middleware(MyMiddleware(*args, **kwargs))
 ## Create middleware
 
 ```python
-from HydroPatch.middlewares.middleware_types import OnUpdateMiddleware
-from HydroPatch.middlewares import PatchHelper
+from hydrogram_patch.middlewares.middleware_types import OnUpdateMiddleware
+from hydrogram_patch.middlewares import PatchHelper
 
 
 class MyMiddleware(OnUpdateMiddleware):
@@ -81,7 +81,7 @@ OnUpdateMiddleware - middleware that reacts to everything
 
 MixedMiddleware - middleware that reacts to certain types of handlers
 
-pass the types of handlers from pyrogram.handlers during initialization that the malware will process
+pass the types of handlers from hydrogram.handlers during initialization that the malware will process
 
 patch_manager.include_middleware(ExampleMiddleware((MessageHandler, EditedMessageHandler), False))
 
@@ -93,18 +93,18 @@ patch_manager.include_middleware(ExampleMiddleware((MessageHandler, EditedMessag
 ```
 everything you can import from
 ```text
-from HydroPatch.middlewares.middleware_types
+from hydrogram_patch.middlewares.middleware_types
 ```
 
 # FSM
 allowed update types you can manage with
-app.dispatcher.manage_allowed_update_types(pyrogram.types.Update)
+app.dispatcher.manage_allowed_update_types(hydrogram.types.Update)
 ## Usage
 
 ```python
-from pyrogram import Client
-from HydroPatch import patch
-from HydroPatch.fsm.storages import MemoryStorage
+from hydrogram import Client
+from hydrogram_patch import patch
+from hydrogram_patch.fsm.storages import MemoryStorage
 
 # create client
 app = Client("my_account", api_id='API_ID', api_hash='API_HASH')
@@ -120,7 +120,7 @@ patch_manager.set_storage(MemoryStorage())
 ## Creating state groups
 
 ```python
-from HydroPatch.fsm import StatesGroup, StateItem
+from hydrogram_patch.fsm import StatesGroup, StateItem
 
 class Parameters(StatesGroup):
     weight = StateItem()
@@ -129,8 +129,8 @@ class Parameters(StatesGroup):
 ## Processing and filtering data
 
 ```python
-from HydroPatch.fsm import State
-from HydroPatch.fsm.filter import StateFilter
+from hydrogram_patch.fsm import State
+from hydrogram_patch.fsm.filter import StateFilter
 
 
 @app.on_message(filters.private & StateFilter()) # the same as StateFilter("*"), catches all states
@@ -156,7 +156,7 @@ async def process_3(client: Client, message, state: State):
 ```
 ## Writing your own storages
 ```python
-from HydroPatch.fsm import State, BaseStorage
+from hydrogram_patch.fsm import State, BaseStorage
 
 
 class YourStorage(BaseStorage):
@@ -198,7 +198,7 @@ my_filter = filters.create(my_filter)
 ## Routers
 
 ```python
-from HydroPatch.router import Router
+from hydrogram_patch.router import Router
 
 
 my_router = Router()
@@ -220,10 +220,7 @@ Pull requests are welcome. For major changes, please open a question first to di
 Be sure to update tests as needed.
 
 
-
-github: https://github.com/DaviisDev/HydroPatch
-
-telegram: https://t.me/DaviisDev
+github: https://github.com/FumigatorusComarchuk/hydrogram_patch
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

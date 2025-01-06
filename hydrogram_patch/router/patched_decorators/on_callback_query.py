@@ -20,17 +20,21 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnRawUpdate:
-    def raw_update(self=None, group: int = 0) -> Callable:
-        """Decorator for handling raw updates.
+class OnCallbackQuery:
+    def callback(self=None, filters=None, group: int = 0) -> Callable:
+        """Decorator for handling callback queries.
 
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.RawUpdateHandler`.
+        :obj:`~hydrogram.handlers.CallbackQueryHandler`.
 
         Parameters:
+            filters (:obj:`~hydrogram.filters`, *optional*):
+                Pass one or more filters to allow only a subset of callback queries to be passed
+                in your function.
+
             group (``int``, *optional*):
                 The group identifier, defaults to 0.
         """
@@ -38,9 +42,14 @@ class OnRawUpdate:
         def decorator(func: Callable) -> Callable:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
-                    self._app.add_handler(hydrogram.handlers.RawUpdateHandler(func), group)
+                    self._app.add_handler(
+                        hydrogram.handlers.CallbackQueryHandler(
+                            func, filters), group
+                    )
                 else:
-                    self._decorators_storage.append((hydrogram.handlers.RawUpdateHandler(func), group))
+                    self._decorators_storage.append(
+                        (hydrogram.handlers.CallbackQueryHandler(func, filters), group))
+
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

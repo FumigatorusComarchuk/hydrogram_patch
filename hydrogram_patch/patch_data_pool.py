@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Union
-from HydroPatch.fsm import BaseStorage
+from hydrogram_patch.fsm import BaseStorage
 from contextlib import suppress
 
 
@@ -29,4 +29,3 @@ PatchDataPool.update_pool = {}
 PatchDataPool.hydrogram_patch_middlewares = []
 PatchDataPool.hydrogram_patch_outer_middlewares = []
 PatchDataPool.hydrogram_patch_fsm_storage = None
-

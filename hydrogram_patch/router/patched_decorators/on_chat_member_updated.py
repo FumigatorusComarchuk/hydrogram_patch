@@ -20,23 +20,34 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnDisconnect:
-    def disconnect(self=None) -> Callable:
-        """Decorator for handling disconnections.
+class OnChatMemberUpdated:
+    def chat_member_updated(self=None, filters=None, group: int = 0) -> Callable:
+        """Decorator for handling event changes on chat members.
 
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.DisconnectHandler`.
+        :obj:`~hydrogram.handlers.ChatMemberUpdatedHandler`.
+
+        Parameters:
+            filters (:obj:`~hydrogram.filters`, *optional*):
+                Pass one or more filters to allow only a subset of updates to be passed in your function.
+
+            group (``int``, *optional*):
+                The group identifier, defaults to 0.
         """
 
         def decorator(func: Callable) -> Callable:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
-                    self._app.add_handler(hydrogram.handlers.DisconnectHandler(func))
+                    self._app.add_handler(
+                        hydrogram.handlers.ChatMemberUpdatedHandler(
+                            func, filters), group
+                    )
                 else:
-                    self._decorators_storage.append(hydrogram.handlers.DisconnectHandler(func))
+                    self._decorators_storage.append(
+                        (hydrogram.handlers.ChatMemberUpdatedHandler(func, filters), group))
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

@@ -2,8 +2,8 @@ from json import dumps, loads
 from typing import Any, Dict, Optional
 from redis.asyncio.client import Redis
 from redis.asyncio.connection import ConnectionPool
-from HydroPatch.fsm.base_storage import BaseStorage
-from HydroPatch.fsm.states import State
+from hydrogram_patch.fsm.base_storage import BaseStorage
+from hydrogram_patch.fsm.states import State
 
 
 class RedisStorage(BaseStorage):

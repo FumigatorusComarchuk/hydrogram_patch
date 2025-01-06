@@ -20,19 +20,20 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnChatMemberUpdated:
-    def chat_member_updated(self=None, filters=None, group: int = 0) -> Callable:
-        """Decorator for handling event changes on chat members.
+class OnDeletedMessages:
+    def deleted_messages(self=None, filters=None, group: int = 0) -> Callable:
+        """Decorator for handling deleted messages.
 
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.ChatMemberUpdatedHandler`.
+        :obj:`~hydrogram.handlers.DeletedMessagesHandler`.
 
         Parameters:
             filters (:obj:`~hydrogram.filters`, *optional*):
-                Pass one or more filters to allow only a subset of updates to be passed in your function.
+                Pass one or more filters to allow only a subset of messages to be passed
+                in your function.
 
             group (``int``, *optional*):
                 The group identifier, defaults to 0.
@@ -42,10 +43,12 @@ class OnChatMemberUpdated:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
                     self._app.add_handler(
-                        hydrogram.handlers.ChatMemberUpdatedHandler(func, filters), group
+                        hydrogram.handlers.DeletedMessagesHandler(
+                            func, filters), group
                     )
                 else:
-                    self._decorators_storage.append((hydrogram.handlers.ChatMemberUpdatedHandler(func, filters), group))
+                    self._decorators_storage.append(
+                        (hydrogram.handlers.DeletedMessagesHandler(func, filters), group))
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

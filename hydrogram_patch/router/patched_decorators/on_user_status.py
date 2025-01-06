@@ -20,19 +20,18 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnChatJoinRequest:
-    def chat_join_request(self=None, filters=None, group: int = 0) -> Callable:
-        """Decorator for handling chat join requests.
-
+class OnUserStatus:
+    def user_status(self=None, filters=None, group: int = 0) -> Callable:
+        """Decorator for handling user status updates.
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.ChatJoinRequestHandler`.
+        :obj:`~hydrogram.handlers.UserStatusHandler`.
 
         Parameters:
             filters (:obj:`~hydrogram.filters`, *optional*):
-                Pass one or more filters to allow only a subset of updates to be passed in your function.
+                Pass one or more filters to allow only a subset of UserStatus updated to be passed in your function.
 
             group (``int``, *optional*):
                 The group identifier, defaults to 0.
@@ -41,11 +40,14 @@ class OnChatJoinRequest:
         def decorator(func: Callable) -> Callable:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
+
                     self._app.add_handler(
-                        hydrogram.handlers.ChatJoinRequestHandler(func, filters), group
+                        hydrogram.handlers.UserStatusHandler(
+                            func, filters), group
                     )
                 else:
-                    self._decorators_storage.append((hydrogram.handlers.ChatJoinRequestHandler(func, filters), group))
+                    self._decorators_storage.append(
+                        (hydrogram.handlers.UserStatusHandler(func, filters), group))
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

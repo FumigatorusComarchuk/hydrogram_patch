@@ -20,19 +20,19 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnChosenInlineResult:
-    def chosen_inline_result(self=None, filters=None, group: int = 0) -> Callable:
-        """Decorator for handling chosen inline results.
+class OnInlineQuery:
+    def inline_query(self=None, filters=None, group: int = 0) -> Callable:
+        """Decorator for handling inline queries.
 
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.ChosenInlineResultHandler`.
+        :obj:`~hydrogram.handlers.InlineQueryHandler`.
 
         Parameters:
             filters (:obj:`~hydrogram.filters`, *optional*):
-                Pass one or more filters to allow only a subset of chosen inline results to be passed
+                Pass one or more filters to allow only a subset of inline queries to be passed
                 in your function.
 
             group (``int``, *optional*):
@@ -42,11 +42,14 @@ class OnChosenInlineResult:
         def decorator(func: Callable) -> Callable:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
+
                     self._app.add_handler(
-                        hydrogram.handlers.ChosenInlineResultHandler(func, filters), group
+                        hydrogram.handlers.InlineQueryHandler(
+                            func, filters), group
                     )
                 else:
-                    self._decorators_storage.append((hydrogram.handlers.ChosenInlineResultHandler(func, filters), group))
+                    self._decorators_storage.append(
+                        (hydrogram.handlers.InlineQueryHandler(func, filters), group))
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

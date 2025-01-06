@@ -1,5 +1,5 @@
-from HydroPatch.fsm.base_storage import BaseStorage
-from HydroPatch.fsm.states import State
+from hydrogram_patch.fsm.base_storage import BaseStorage
+from hydrogram_patch.fsm.states import State
 
 
 class MemoryStorage(BaseStorage):

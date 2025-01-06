@@ -20,19 +20,19 @@ from typing import Callable
 
 import hydrogram
 
-import HydroPatch
+import hydrogram_patch
 
 
-class OnMessage:
-    def message(self=None, filters=None, group: int = 0) -> Callable:
-        """Decorator for handling new messages.
+class OnPoll:
+    def poll(self=None, filters=None, group: int = 0) -> Callable:
+        """Decorator for handling poll updates.
 
         This does the same thing as :meth:`~hydrogram.Client.add_handler` using the
-        :obj:`~hydrogram.handlers.MessageHandler`.
+        :obj:`~hydrogram.handlers.PollHandler`.
 
         Parameters:
             filters (:obj:`~hydrogram.filters`, *optional*):
-                Pass one or more filters to allow only a subset of messages to be passed
+                Pass one or more filters to allow only a subset of polls to be passed
                 in your function.
 
             group (``int``, *optional*):
@@ -43,10 +43,11 @@ class OnMessage:
             if isinstance(self, HydroPatch.router.Router):
                 if self._app is not None:
                     self._app.add_handler(
-                        hydrogram.handlers.MessageHandler(func, filters), group
+                        hydrogram.handlers.PollHandler(func, filters), group
                     )
                 else:
-                    self._decorators_storage.append((hydrogram.handlers.MessageHandler(func, filters), group))
+                    self._decorators_storage.append(
+                        (hydrogram.handlers.PollHandler(func, filters), group))
             else:
                 raise RuntimeError(
                     "you should only use this in routers, and only as a decorator"

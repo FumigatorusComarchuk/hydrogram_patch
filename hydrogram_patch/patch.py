@@ -1,6 +1,6 @@
 from hydrogram import Client
 
-from HydroPatch.fsm import BaseStorage
+from hydrogram_patch.fsm import BaseStorage
 from .patch_data_pool import PatchDataPool
 
 from .dispatcher import PatchedDispatcher
