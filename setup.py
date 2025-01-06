@@ -13,7 +13,7 @@ if sys.version_info < MINIMAL_PY_VERSION:
 
 setup(
     name="hydrogram_patch",
-    version="1.6.0",
+    version="1.6.1",
     license="MIT",
     author="kotttee",
     python_requires=">=3.9",

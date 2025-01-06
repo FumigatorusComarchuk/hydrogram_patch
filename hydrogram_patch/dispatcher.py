@@ -92,10 +92,10 @@ class PatchedDispatcher(Dispatcher):
                             try:
                                 # formation kwargs
                                 kwargs = await patch_helper._get_data_for_handler(
-                                    handler.callback.__code__.co_varnames
+                                    handler.original_callback.__code__.co_varnames
                                 )
-                                if inspect.iscoroutinefunction(handler.callback):
-                                    await handler.callback(self.client, *args, **kwargs)
+                                if inspect.iscoroutinefunction(handler.original_callback):
+                                    await handler.original_callback(self.client, *args, **kwargs)
                                 else:
                                     args = list(args)
                                     for v in kwargs.values():
@@ -103,7 +103,7 @@ class PatchedDispatcher(Dispatcher):
                                     args = tuple(args)
                                     await self.loop.run_in_executor(
                                         self.client.executor,
-                                        handler.callback,
+                                        handler.original_callback,
                                         self.client,
                                         *args
                                     )
