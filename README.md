@@ -4,7 +4,9 @@ hydrogram_patch is a Python library this is a library that adds middlewares and 
 
 ## Installation
 
+```bash
 pip install git+https://github.com/FumigatorusComarchuk/hydrogram_patch
+```
 
 # Middlewares
 
